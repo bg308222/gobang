@@ -100,7 +100,6 @@ export default {
     },
     handleSelectedPositionClick() {
       this.winner = this.getWinner;
-      if (this.winner) return;
 
       this.history.push(
         JSON.parse(JSON.stringify({ turn: this.turn, board: this.board }))
@@ -112,6 +111,7 @@ export default {
     handleRegret() {
       if (this.history.length === 0) return;
 
+      this.winner = null;
       const lastStep = this.history[this.history.length - 1];
       this.selectedPosition = null;
       this.turn = lastStep.turn;
@@ -120,6 +120,7 @@ export default {
     },
     handleRestart() {
       this.selectedPosition = null;
+      this.winner = null;
       this.turn =
         turnGenerator.next().value === "b" ? "b" : turnGenerator.next().value;
       this.board = [...new Array(225)].map(() => "n");
